@@ -8,7 +8,7 @@ use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class CourseController extends Controller
 {
@@ -29,19 +29,17 @@ class CourseController extends Controller
         return new CourseResource($course);
     }
 
-    public function update(
-        UpdateCourseRequest $request,
-        Course $course
-    ): CourseResource {
+    public function update(UpdateCourseRequest $request, Course $course): CourseResource
+    {
         $course->update($request->validated());
 
-        return new CourseResource($course->fresh());
+        return new CourseResource($course);
     }
 
-    public function destroy(Course $course): JsonResponse
+    public function destroy(Course $course): Response
     {
         $course->delete();
 
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }

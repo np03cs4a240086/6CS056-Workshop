@@ -20,4 +20,11 @@ class Student extends Model
             'date_of_birth' => 'date',
         ];
     }
+
+    protected function getAgeAttribute(): ?int
+    {
+        return $this->date_of_birth
+            ? $this->date_of_birth->age
+            : null;
+    }
 }
